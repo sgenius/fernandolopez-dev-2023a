@@ -1,0 +1,29 @@
+.oneCol {
+    color: #222;
+    padding: 1rem 0;
+}
+
+.griddedContainer {
+    display: grid;
+}
+
+.gridCellLeft, .gridCellRight {
+    grid-column: 1 / 2;
+}
+
+@media (min-width: 48rem) {
+    .griddedContainer {
+        grid-template-columns: auto auto;
+        grid-column-gap: 3rem;    
+    }
+
+    .gridCellRight {
+        grid-column: 2 / 3;
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .oneCol {
+        color: #ddd;
+    }
+}

@@ -1,0 +1,32 @@
+.h2 {
+    padding: 1rem 0;
+    border-top: 1px solid rgb(var(--border-1-rgb));
+    font-size: 2rem;
+}
+
+.griddedContainer {
+    display: grid;
+    padding-bottom: 1rem;
+}
+
+.projectCell {
+    border: 1px solid rgb(var(--border-2-rgb));
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.projectCell h3, .projectCell p {
+    margin-bottom: 1rem;
+}
+
+.projectCellImg {
+    height: auto;
+    max-width: 100%;
+}
+
+@media (min-width: 48rem) {
+    .griddedContainer {
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 2rem;
+    }
+}

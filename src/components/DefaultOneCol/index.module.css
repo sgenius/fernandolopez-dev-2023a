@@ -1,0 +1,65 @@
+/* styles inspired by the react-awesome-styled-grid module */
+.wrapper {
+    width: 100%;
+    position: relative;
+}
+
+.container {
+    margin: 0 auto;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.row {
+    display: flex;
+    flex-flow: row wrap;
+    box-sizing: border-box;
+}
+
+.col {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+@media only screen and (min-width: 1rem) {
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .row {
+        margin-left: -0.5rem;
+        margin-right: -0.5rem;
+    }
+
+    .col {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+@media only screen and (min-width: 64rem) {
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .row {
+        margin-left: -0.75rem;
+        margin-right: -0.75rem;
+    }
+
+    .col {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+
+        flex: 1 1 75%;
+        max-width: 75%;
+
+        margin-left: 12.5%;
+    }
+}
