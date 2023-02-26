@@ -31,4 +31,5 @@ export const MOSAIC_DATA = {
     },
     activeFilters: [],
     currentRef: null,
+    scaleBy: 1.05,
 };

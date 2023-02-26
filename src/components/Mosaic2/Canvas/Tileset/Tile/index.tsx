@@ -14,8 +14,8 @@ const Mosaic2Tile: React.FC<TileKey> = ({ xGrid, yGrid, imageSet }) => {
     const width = pieceDimensions.width * pieceDimensions.multiplier;
     const height = pieceDimensions.height * pieceDimensions.multiplier;
 
-    const xRef = (xGrid - xMin);
-    const yRange = yMax - xMin;
+    const xRef = xGrid - xMin;
+    const yRange = yMax - yMin;
     const yRef = yRange - yGrid + yMin;
 
     const x = width * xRef;
