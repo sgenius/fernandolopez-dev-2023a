@@ -3,12 +3,14 @@ import React, { useState, useLayoutEffect, useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
 import styles from './index.module.css';
 import Tileset from './Tileset';
+import { useMosaic2State } from '../context';
 import { MOSAIC_DATA } from '../constants';
 
 const Mosaic2Canvas: React.FC = () => {
     const targetRef = useRef<HTMLDivElement>(null);
     const [curWidth, setCurWidth] = useState(0);
     const [curHeight, setCurHeight] = useState(0);
+    const { state: { currentImageSet }, dispatch } = useMosaic2State(); 
 
     useLayoutEffect(() => {
         if (targetRef.current) {
@@ -17,7 +19,24 @@ const Mosaic2Canvas: React.FC = () => {
         }
     }, []);
 
-    const { scaleBy } = MOSAIC_DATA;
+    const { scaleBy, imageSets } = MOSAIC_DATA;
+
+    // Check the current scale; set the appropiate image set for it.
+    const updateImageSetByScale = (scaleX: number) => {
+        let newImageSet = currentImageSet;
+
+        if (currentImageSet < imageSets.length - 1 && imageSets[currentImageSet + 1].minZoom < scaleX) {
+            newImageSet += 1;
+        }
+
+        if (currentImageSet > 0 && imageSets[currentImageSet].minZoom > scaleX) {
+            newImageSet -= 1;
+        }
+
+        if (newImageSet !== currentImageSet) {
+            dispatch({ type: 'setCurrentImageSet', imageSet: newImageSet });
+        }
+    }
 
     // Zoom event handler.
     // https://konvajs.org/docs/sandbox/Zooming_Relative_To_Pointer.html#
@@ -53,7 +72,8 @@ const Mosaic2Canvas: React.FC = () => {
             x: pointer.x - mousePointTo.x * newScale,
             y: pointer.y - mousePointTo.y * newScale,
         };
-        stage.position(newPos);        
+        stage.position(newPos);
+        updateImageSetByScale(stage.scaleX());
     } 
 
     return (
