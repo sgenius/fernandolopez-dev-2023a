@@ -1,5 +1,6 @@
 import React from 'react';
 
+import TopBar from '@/components/TopBar';
 import IntroRow from '@/components/Index/IntroRow';
 import HeaderRow from '@/components/Index/HeaderRow';
 import ProjectsRow from '@/components/Index/ProjectsRow';
@@ -12,6 +13,7 @@ export const metadata = {
 export default function Home() {
     return (
         <>
+            <TopBar />
             <HeaderRow />
             <IntroRow />
             <ProjectsRow />
