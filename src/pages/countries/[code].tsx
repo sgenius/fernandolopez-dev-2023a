@@ -1,11 +1,12 @@
-import { GnCountryDataResponse, GnCountryData } from './defs';
+import { RcCountryData } from './defs';
+import { RC_COUNTRIES_URI, getRcCountryUri } from './helpers';
 
 export async function getStaticPaths() {
-    const countriesResponse = await fetch('https://secure.geonames.org/countryInfoJSON?lang=en&username=fa_lopez&style=full')
-    const gnCountriesDataObj: GnCountryDataResponse = await countriesResponse.json();
+    const countriesResponse = await fetch(RC_COUNTRIES_URI)
+    const rcCountriesDataObj: RcCountryData[] = await countriesResponse.json();
 
-    const paths = gnCountriesDataObj.geonames.map((countryData) => ({
-        params: { code: countryData.countryCode },
+    const paths = rcCountriesDataObj.map((countryData) => ({
+        params: { code: countryData.cca2 },
     }));
 
     return { paths, fallback: false }
@@ -13,28 +14,24 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: { code: string } }) {
     const { code } = params;
-    const fetchUri = `https://secure.geonames.org/countryInfoJSON?lang=en&username=fa_lopez&country=${code}&style=full`;
-    console.log('countries.getStaticProps > fetchUri: ', fetchUri);
+    const fetchUri = getRcCountryUri(code);
     const countryResponse = await fetch(fetchUri);
-    const gnCountryDataObj: GnCountryDataResponse = await countryResponse.json();
-
-    console.log('countries.getStaticProps > gnCountryDataObj: ', gnCountryDataObj);
-    const gnCountryData = gnCountryDataObj.geonames[0] || {};
-
+    const rcCountryDataArr: RcCountryData[] = await countryResponse.json();
     return {
         props: {
-            gnCountryData,
+            rcCountryData: rcCountryDataArr[0],
         }
     }
 }
 
 interface CountryPageProps {
-    gnCountryData: GnCountryData,
+    rcCountryData: RcCountryData,
 }
 
-const Country: React.FC<CountryPageProps> = ({ gnCountryData }) => {
+const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
+    console.log('Country > ', rcCountryData)
     return (
-        <h1>{gnCountryData.countryName}</h1>
+        <h1>{rcCountryData.name.common}</h1>
     )
 }
 

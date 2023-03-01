@@ -1,5 +1,5 @@
 import { KonvaEventObject } from 'konva/lib/Node';
-import React, { useState, useLayoutEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
 import styles from './index.module.css';
 import Tileset from './Tileset';
@@ -12,12 +12,29 @@ const Mosaic2Canvas: React.FC = () => {
     const [curHeight, setCurHeight] = useState(0);
     const { state: { currentImageSet }, dispatch } = useMosaic2State(); 
 
-    useLayoutEffect(() => {
+    // https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
+    useEffect(() => {
         if (targetRef.current) {
             setCurWidth(targetRef.current.offsetWidth);
             setCurHeight(targetRef.current.offsetHeight);
         }
-    }, []);
+        function handleResize() {
+            if (targetRef.current) {
+                setCurWidth(targetRef.current.offsetWidth);
+                setCurHeight(targetRef.current.offsetHeight);
+            }
+        }
+        
+        if (window) {
+            window.addEventListener('resize', handleResize);
+        }
+
+        return () => {
+            if (window) {
+                window.removeEventListener('resize', handleResize);
+            }
+        }
+    }, [targetRef])
 
     const { scaleBy, imageSets } = MOSAIC_DATA;
 

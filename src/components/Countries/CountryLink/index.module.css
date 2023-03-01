@@ -1,0 +1,26 @@
+.countryLink {
+    display: inline-block;
+    border: 3px solid rgb(var(--theme-color-3-rgb));
+    border-width: 0 0 3px;
+    background: rgb(var(--background-2-rgb));
+    padding: 0.2rem;
+    color: rgb(var(--theme-color-2-rgb));
+    font-variant: small-caps;
+}
+
+.countryLink:hover {
+    background: rgb(var(--background-1-rgb));
+}
+
+.name {
+    display: inline-block;
+    margin-left: 0.5rem;
+}
+
+.name.isDependency {
+    font-style: italic;
+}
+
+.flag {
+    font-family: 'Twemoji Mozila', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji', 'EmojiOne Color', 'Android Emoji', sans-serif;
+}
