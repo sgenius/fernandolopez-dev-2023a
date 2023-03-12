@@ -6,7 +6,8 @@ import BottomBar from '@/components/BottomBar';
 import { abrilFatface } from '@/components/fonts';
 import styles from './countries.module.css';
 import CountryLink from '@/components/Countries/CountryLink';
-import { RC_COUNTRIES_URI, sortCountriesByName, groupCountriesByRegion } from './helpers';
+import WorldMap from '@/components/Countries/WorldMap';
+import { RC_COUNTRIES_URI, groupCountriesByRegion } from './helpers';
 import { RcCountryData } from './defs';
 
 export async function getStaticProps() {
@@ -22,10 +23,10 @@ export async function getStaticProps() {
 const makeCountryList = (countryArray: RcCountryData[]) => {
     const countryList = countryArray
         .map((country => (
-        <li key={`li-country-${country.cca2}`}>
+        <li key={`li-country-${country.cca3}`}>
             <CountryLink
                 name={country.name.common}
-                cca2={country.cca2}
+                cca3={country.cca3}
                 flag={country.flag}
                 isDependency={!country.independent}
             />
@@ -81,12 +82,15 @@ const CountriesHome: React.FC<Props> = ({ rcCountries }) => {
                         <p>This was created as an experiment to test the power of static websites - in this case, Next.js.
                             The previous version of this website used <Link href="https://github.com/nozzle/react-static">React Static</Link>,
                             which meant using different techniques than the current version.</p>
-                        <p>Most data comes from <Link as="a" href="https://restcountries.eu">REST Countries</Link>; it 
+                        <p>Most data comes from <Link href="https://restcountries.eu">REST Countries</Link>; it 
                             was consumed at compilation time to generate static pages which are fast to load, yet extremely versatile. 
                         </p>
                     </section>
                     <section>
                         <h2 className={styles.countriesHeader}>The countries</h2>
+                        <section className={styles.worldMapSection}>
+                            <WorldMap />
+                        </section>
                         {countryLists}
                     </section>
                 </DefaultOneCol>
