@@ -9,10 +9,10 @@ export interface GnCountryData {
     geonameId: number;
     south: number;
     isoAlpha3: string;
-    north: string;
+    north: number;
     fipsCode: string;
     population: string;
-    east: string;
+    east: number;
     isoNumeric: string;
     areaInSqKm: string;
     countryCode: string;

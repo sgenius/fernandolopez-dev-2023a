@@ -1,15 +1,21 @@
 import React from 'react';
-import TopBar from '@/components/TopBar';
-import DefaultOneCol from '@/components/DefaultOneCol';
 import Image from 'next/image';
-import Link from '@/components/Link';
+import dynamic from 'next/dynamic';
 import BottomBar from '@/components/BottomBar';
-import styles from './countries.module.css';
-import { abrilFatface } from '@/components/fonts';
-import { getTextWithCommasList } from '@/helpers/format';
-import { RcCountryData, RcCountryImage, RcCountryIdd } from './defs';
 import { RC_COUNTRIES, RC_COUNTRIES_BY_CCA3 } from '@/components/Countries/data/rcCountries';
 import CountryLink from '@/components/Countries/CountryLink';
+// import CountryMap from '@/components/Countries/CountryMap';
+import DefaultOneCol from '@/components/DefaultOneCol';
+import { abrilFatface } from '@/components/fonts';
+import Link from '@/components/Link';
+import TopBar from '@/components/TopBar';
+import { roundDec, largeNumberFormat } from '@/helpers/format';
+import styles from './countries.module.css';
+import { RcCountryData, RcCountryImage, RcCountryIdd } from './defs';
+
+const DynamicCountryMap = dynamic(() => import('@/components/Countries/CountryMap'), {
+    ssr: false,
+})
 
 export async function getStaticPaths() {
     const paths = RC_COUNTRIES.map((countryData) => ({
@@ -33,14 +39,16 @@ interface CountryPageProps {
 }
 
 const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
-    console.log('Country > ', rcCountryData)
     const borderLinks = rcCountryData.borders?.map((border) => (
         <>
             <CountryLink cca3={border} key={`border-${border}`} />{' '}
         </>
     ));
 
-    const currencyData = Object.values(rcCountryData.currencies || []);
+    const currencyData = Object.values(rcCountryData.currencies || {});
+    const languageData = Object.values(rcCountryData.languages || {});
+
+    console.log(rcCountryData)
     
     return (
         <>
@@ -85,16 +93,16 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                         <div id="area-pop-cell" className={styles.contentCellRight}>
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Area</span>
-                                {rcCountryData.area} km2
+                                {rcCountryData.area} km<sup>2</sup>
                             </article>
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Population</span>
-                                {rcCountryData.population} habitants
+                                {largeNumberFormat(rcCountryData.population)} inhabitants
                             </article>
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Density</span>
-                                {rcCountryData.population / rcCountryData.area} hab / km2
-                            </article>                            
+                                {roundDec(rcCountryData.population / rcCountryData.area, 3)} pop / km<sup>2</sup>
+                            </article>
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Demonyms</span>
                                 {rcCountryData.demonyms ? (
@@ -103,18 +111,18 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                                     </>
                                 ) : (<>none</>)}
                             </article>
+                            <article className={styles.cellArticle}>
+                                <span className={styles.articleName}>Official languages</span>
+                                {languageData.join(', ')}
+                            </article>
                         </div>
                         <div id="map-cell" className={`${styles.contentCellFull} ${styles.nonTextCell}`}>
-                            map
+                            <DynamicCountryMap code={rcCountryData.cca3} />
                         </div>
                         <div id="intl-relations-cell">
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Capital(s)</span>
-                                {getTextWithCommasList(rcCountryData.capital || ['none']).map((item) => (
-                                    <React.Fragment key={`capital-${item}`}>
-                                        {item}
-                                    </React.Fragment>
-                                ))}
+                                {(rcCountryData.capital || ['none']).join(', ')}
                             </article>
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Status</span>
@@ -139,6 +147,12 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                                     ))
                                 }
                             </article>
+                            {rcCountryData.gini && (
+                                <article className={styles.cellArticle}>
+                                    <span className={styles.articleName}>GINI</span>
+                                    {Object.entries(rcCountryData.gini)[0][1]} ({Object.entries(rcCountryData.gini)[0][0]})
+                                </article>
+                            )}
                         </div>
                         <div id="others-cell" className={styles.contentCellFull}>
                             <article className={styles.cellArticle}>

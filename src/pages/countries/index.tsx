@@ -47,8 +47,6 @@ const CountriesHome: React.FC = () => {
     const countriesByRegion = groupCountriesByRegion(RC_COUNTRIES);
     const countryLists = makeRegionalCountryLists(countriesByRegion);
 
-    console.log(RC_COUNTRIES);
-
     return (
         <>
             <TopBar />

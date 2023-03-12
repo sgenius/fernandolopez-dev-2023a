@@ -8,7 +8,7 @@ interface Props {
 }
 
 const CountryLink: React.FC<Props> = ({ cca3 }) => {
-    const { name, flag, independent } = RC_COUNTRIES_BY_CCA3[cca3]; 
+    const { name, flag, independent } = RC_COUNTRIES_BY_CCA3[cca3];
     return (
         <Link className={`${styles.countryLink} ${!independent ? styles.isDependency : ''}`} href={`/countries/${cca3 ?? ''}`}>
             {flag && (

@@ -1,4 +1,8 @@
-export const getTextWithCommasList = (textArr: string[]) =>
-    textArr.map((item, index) =>
-        index < textArr.length - 1 ? `${item}, ` : item
-    );
+export const roundDec = (num: number, degree: number = 2) => Number.parseFloat(num.toFixed(degree));
+
+export const largeNumberFormat = (num: number) => {
+    if (num > 1000000) {
+        return `${roundDec(num)}M`;
+    }
+    return num;
+}
