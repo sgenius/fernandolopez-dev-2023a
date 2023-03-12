@@ -7,15 +7,12 @@ import BottomBar from '@/components/BottomBar';
 import styles from './countries.module.css';
 import { abrilFatface } from '@/components/fonts';
 import { getTextWithCommasList } from '@/helpers/format';
-import { RcCountryData } from './defs';
-import { RC_COUNTRIES_URI, getRcCountryUri } from './helpers';
+import { RcCountryData, RcCountryImage, RcCountryIdd } from './defs';
+import { RC_COUNTRIES, RC_COUNTRIES_BY_CCA3 } from '@/components/Countries/data/rcCountries';
 import CountryLink from '@/components/Countries/CountryLink';
 
 export async function getStaticPaths() {
-    const countriesResponse = await fetch(RC_COUNTRIES_URI)
-    const rcCountriesDataObj: RcCountryData[] = await countriesResponse.json();
-
-    const paths = rcCountriesDataObj.map((countryData) => ({
+    const paths = RC_COUNTRIES.map((countryData) => ({
         params: { code: countryData.cca3 },
     }));
 
@@ -24,12 +21,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: { params: { code: string } }) {
     const { code } = params;
-    const fetchUri = getRcCountryUri(code);
-    const countryResponse = await fetch(fetchUri);
-    const rcCountryDataArr: RcCountryData[] = await countryResponse.json();
     return {
         props: {
-            rcCountryData: rcCountryDataArr[0],
+            rcCountryData: RC_COUNTRIES_BY_CCA3[code],
         }
     }
 }
@@ -40,13 +34,13 @@ interface CountryPageProps {
 
 const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
     console.log('Country > ', rcCountryData)
-    const borderLinks = rcCountryData.borders.map((border) => (
+    const borderLinks = rcCountryData.borders?.map((border) => (
         <>
-            <CountryLink name={border} cca3={border} flag={undefined} key={`border-${border}`} />{' '}
+            <CountryLink cca3={border} key={`border-${border}`} />{' '}
         </>
     ));
 
-    const currencyData = Object.values(rcCountryData.currencies);
+    const currencyData = Object.values(rcCountryData.currencies || []);
     
     return (
         <>
@@ -64,7 +58,9 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                         </h1>
                         <div id="emblems" className={styles.emblems}>
                             <Image src={rcCountryData.flags.png} width={100} height={100} alt={rcCountryData.flags.alt || `Flag of ${rcCountryData.name}`} />
-                            <Image src={rcCountryData.coatOfArms.png} width={100} height={100} alt={`Coat of arms of ${rcCountryData.name}`} />
+                            {rcCountryData.coatOfArms && (rcCountryData.coatOfArms as RcCountryImage).png && (
+                                <Image src={(rcCountryData.coatOfArms as RcCountryImage).png} width={100} height={100} alt={`Coat of arms of ${rcCountryData.name}`} />
+                            )}
                         </div>
                     </div>
                 </DefaultOneCol>
@@ -98,10 +94,14 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Density</span>
                                 {rcCountryData.population / rcCountryData.area} hab / km2
-                            </article>
+                            </article>                            
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Demonyms</span>
-                                <em>(m)</em> {rcCountryData.demonyms.eng.m} / <em>(f)</em> {rcCountryData.demonyms.eng.f}
+                                {rcCountryData.demonyms ? (
+                                    <>
+                                        <em>(m)</em> {rcCountryData.demonyms.eng.m} / <em>(f)</em> {rcCountryData.demonyms.eng.f}
+                                    </>
+                                ) : (<>none</>)}
                             </article>
                         </div>
                         <div id="map-cell" className={`${styles.contentCellFull} ${styles.nonTextCell}`}>
@@ -110,7 +110,7 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                         <div id="intl-relations-cell">
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Capital(s)</span>
-                                {getTextWithCommasList(rcCountryData.capital).map((item) => (
+                                {getTextWithCommasList(rcCountryData.capital || ['none']).map((item) => (
                                     <React.Fragment key={`capital-${item}`}>
                                         {item}
                                     </React.Fragment>
@@ -145,17 +145,19 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                                 <span className={styles.articleName}>TLD</span>
                                 {rcCountryData.tld}
                             </article>
-                            <article className={styles.cellArticle}>
-                                <span className={styles.articleName}>Phone code</span>
-                                {rcCountryData.idd.root}, suffix(es): {rcCountryData.idd.suffixes.map((item) => (
-                                    <React.Fragment key={`idd-suffix-${item}`}>
-                                        {item}{' '}
-                                    </React.Fragment>
-                                ))}
-                            </article>
+                            {(rcCountryData.idd as RcCountryIdd).root && (
+                                <article className={styles.cellArticle}>
+                                    <span className={styles.articleName}>Phone code</span>
+                                    {(rcCountryData.idd as RcCountryIdd).root}, suffix(es): {(rcCountryData.idd as RcCountryIdd).suffixes.map((item) => (
+                                        <React.Fragment key={`idd-suffix-${item}`}>
+                                            {item}{' '}
+                                        </React.Fragment>
+                                    ))}
+                                </article>
+                            )}
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Postal code format</span>
-                                {rcCountryData.postalCode.format}
+                                {rcCountryData.postalCode ? rcCountryData.postalCode.format : 'none'}
                             </article>
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Drives on the</span>

@@ -29,12 +29,12 @@ export interface RcCountryName {
 }
 
 export interface RcCountryNameRoot extends RcCountryName {
-    native: Record<string, RcCountryName>;
+    nativeName?: Record<string, RcCountryName>;
 }
 
 export interface RcCountryCurrency {
     name: string;
-    symbol: string;
+    symbol?: string;
 }
 
 export interface RcCountryImage {
@@ -43,56 +43,58 @@ export interface RcCountryImage {
     alt?: string;
 }
 
+export interface RcCountryIdd {
+    root: string;
+    suffixes: string[];
+}
+
 export interface RcCountryData {
     name: RcCountryNameRoot;
-    tld: string[];
+    tld?: string[];
     cca2: string;
-    ccn3: string;
+    ccn3?: string;
     cca3: string;
-    cioc: string;
-    independent: boolean;
+    cioc?: string;
+    independent?: boolean;
     status: string;
     unMember: boolean;
-    currencies: Record<string, RcCountryCurrency>;
-    idd: {
-        root: string;
-        suffixes: string[];
-    };
-    capital: string[];
+    currencies?: Record<string, RcCountryCurrency>;
+    idd: RcCountryIdd | {};
+    capital?: string[];
     altSpellings: string[];
     region: string;
-    subregion: string;
-    languages: Record<string, string>;
+    subregion?: string;
+    languages?: Record<string, string>;
     translations: Record<string, RcCountryName>;
     latlng: number[];
-    demonyms: Record<string, Record<'f' | 'm', string>>;
+    demonyms?: Record<string, Record<'f' | 'm', string>>;
     landlocked: boolean;
-    borders: string[];
+    borders?: string[];
     area: number;
-    callingCodes: string[];
+    callingCodes?: string[];
     flag: string;
     maps: {
         googleMaps: string;
         openStreetMaps: string;
     }
     population: number;
-    gini: Record<string, number>;
-    fifa: string;
+    gini?: Record<string, number>;
+    fifa?: string;
     car: {
-        signs: string[];
+        signs?: string[];
         side: 'left' | 'right';
     };
     timezones: string[];
     continents: string[];
     flags: RcCountryImage;
-    coatOfArms: RcCountryImage;
+    coatOfArms: RcCountryImage | {};
     startOfWeek: string;
     capitalInfo: {
         latlng: number[];
-    };
-    postalCode: {
+    } | {};
+    postalCode?: {
         format: string;
-        regex: string;
+        regex?: string;
     };
 }
 

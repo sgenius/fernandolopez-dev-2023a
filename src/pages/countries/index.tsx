@@ -6,29 +6,17 @@ import BottomBar from '@/components/BottomBar';
 import { abrilFatface } from '@/components/fonts';
 import styles from './countries.module.css';
 import CountryLink from '@/components/Countries/CountryLink';
+import { RC_COUNTRIES } from '@/components/Countries/data/rcCountries';
 import WorldMap from '@/components/Countries/WorldMap';
-import { RC_COUNTRIES_URI, groupCountriesByRegion } from './helpers';
+import { groupCountriesByRegion } from './helpers';
 import { RcCountryData } from './defs';
-
-export async function getStaticProps() {
-    const countriesResponse = await fetch(RC_COUNTRIES_URI);
-    const rcCountries: RcCountryData[] = await countriesResponse.json();
-    return {
-        props: {
-            rcCountries,
-        }
-    }
-}
 
 const makeCountryList = (countryArray: RcCountryData[]) => {
     const countryList = countryArray
         .map((country => (
         <li key={`li-country-${country.cca3}`}>
             <CountryLink
-                name={country.name.common}
                 cca3={country.cca3}
-                flag={country.flag}
-                isDependency={!country.independent}
             />
         </li>
     )), []);
@@ -55,13 +43,11 @@ export const makeRegionalCountryLists = (countriesByRegion: Record<string, RcCou
     return countryLists;
 }
 
-interface Props {
-    rcCountries: RcCountryData[];
-}
-
-const CountriesHome: React.FC<Props> = ({ rcCountries }) => {
-    const countriesByRegion = groupCountriesByRegion(rcCountries);
+const CountriesHome: React.FC = () => {
+    const countriesByRegion = groupCountriesByRegion(RC_COUNTRIES);
     const countryLists = makeRegionalCountryLists(countriesByRegion);
+
+    console.log(RC_COUNTRIES);
 
     return (
         <>
