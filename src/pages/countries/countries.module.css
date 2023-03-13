@@ -76,7 +76,6 @@
 
 .contentGrid {
     display: grid;
-    grid-template-columns: 100%;
 }
 
 .contentGrid > * {
@@ -87,14 +86,7 @@
 
 .contentGrid.headerGrid > * {
     padding: 0;
-}
-
-.contentCellFull {
-    grid-column: 1 / span 2;
-}
-
-.contentCellRight {
-    border-left: 0;
+    border: 0;
 }
 
 .nonTextCell {
@@ -114,11 +106,15 @@
     margin: 0.5rem 0;
 }
 
+.mapCell {
+    min-height: 4rem;
+}
+
 @media only screen and (min-width: 64rem) {
     .contentGrid {
         grid-template-columns: 50% 50%;
     }
-
+    
     .contentGrid.headerGrid {
         grid-template-columns: 60% 40%;
     }
@@ -130,4 +126,13 @@
     .contentGrid.headerGrid > * {
         border-width: 0;
     }
+
+    .contentCellFull {
+        grid-column: 1 / span 2;
+    }
+
+    .contentCellRight {
+        border-left: 0;
+    }
+    
 }

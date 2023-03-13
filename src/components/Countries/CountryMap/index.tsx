@@ -16,7 +16,7 @@ export const CountryMap: React.FC<Props> = ({ code, width = 733, height = 400 })
         return null;
     }
     const bounds: LatLngBoundsExpression = [[north, west], [south, east]];
-    console.log('CountryMap > ', { code, bounds })
+    console.log('CountryMap > ', { code, bounds, width, height })
     return (
         <div style={{ aspectRatio: width / height, height, width }}>
             <MapContainer

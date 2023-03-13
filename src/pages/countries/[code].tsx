@@ -4,7 +4,6 @@ import dynamic from 'next/dynamic';
 import BottomBar from '@/components/BottomBar';
 import { RC_COUNTRIES, RC_COUNTRIES_BY_CCA3 } from '@/components/Countries/data/rcCountries';
 import CountryLink from '@/components/Countries/CountryLink';
-// import CountryMap from '@/components/Countries/CountryMap';
 import DefaultOneCol from '@/components/DefaultOneCol';
 import { abrilFatface } from '@/components/fonts';
 import Link from '@/components/Link';
@@ -16,6 +15,10 @@ import { RcCountryData, RcCountryImage, RcCountryIdd } from './defs';
 const DynamicCountryMap = dynamic(() => import('@/components/Countries/CountryMap'), {
     ssr: false,
 })
+
+const DynamicCountryMapCell = dynamic(() => import('@/components/Countries/CountryMapCell'), {
+    ssr: false,
+});
 
 export async function getStaticPaths() {
     const paths = RC_COUNTRIES.map((countryData) => ({
@@ -116,9 +119,7 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                                 {languageData.join(', ')}
                             </article>
                         </div>
-                        <div id="map-cell" className={`${styles.contentCellFull} ${styles.nonTextCell}`}>
-                            <DynamicCountryMap code={rcCountryData.cca3} />
-                        </div>
+                        {/* <DynamicCountryMapCell className={`${styles.contentCellFull} ${styles.nonTextCell} ${styles.mapCell}`} code={rcCountryData.cca3} /> */}
                         <div id="intl-relations-cell">
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Capital(s)</span>
