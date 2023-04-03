@@ -1,4 +1,5 @@
 import { RcCountryData } from "./defs";
+import { GN_COUNTRIES_BY_CCA3 } from "@/components/Countries/data/gnCountries";
 
 export const RC_COUNTRIES_URI = 'https://restcountries.com/v3.1/all';
 export const getRcCountryUri = (code: string): string => `https://restcountries.com/v3.1/alpha/${code}`;
@@ -30,3 +31,12 @@ export const groupCountriesByRegion = (countries: RcCountryData[]): Record<strin
 
     return groupedCountries;
 };
+
+export const getCountryBoundsStr = (code: string): string => {
+    const countryData = GN_COUNTRIES_BY_CCA3[code];
+    if (!countryData) {
+        throw new Error(`No data available for country code ${code}`);
+    }
+    const { north, south, east, west } = countryData;
+    return `[${west},${south},${east},${north}]`;
+}

@@ -1,0 +1,220 @@
+.legend {
+    z-index: 1;
+    position: absolute;
+    top: 3rem;
+    right: 3rem;
+    width: 20rem;
+    background: rgb(var(--background-2-rgb));
+
+    color: rgb(var(--foreground-1-rgb));
+    border: 1px solid rgb(var(--foreground-1-rgb));
+
+    max-height: 80vh;
+
+    overflow: auto;
+}
+
+.internalScroller {
+    padding: 1rem;
+}
+
+.internalScroller summary {
+    cursor: pointer;
+}
+
+.legendTable td {
+    padding: 0.5rem 0;
+}
+
+.line {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    min-height: 1rem;
+}
+
+.line::before, .line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    width: 80%;
+    height: 50%;
+    border-bottom: 2px solid transparent;
+}
+
+.line::after {
+    border-width: 6px;
+}
+
+.area {
+    height: 2rem;
+    width: calc(100% - 2rem);
+    margin: 1rem;
+
+    border: 5px solid #fff;
+    text-align: center;
+}
+
+.line.water::after{
+    border-bottom: 2px solid blue;
+}
+
+.area.water {
+    border: 2px solid blue;
+    border-radius: 1rem;
+}
+
+.area.water > div {
+    border-radius: 1rem;
+    height: 2rem;
+    width: 100%;
+    border: 4px solid lightblue;
+    background-color: #fff;
+}
+
+.line.levelCurve::before {
+    border-color: #efc15e;
+}
+
+.line.levelCurve > div {
+    width: 100%;
+    text-align: center;
+    color: #f2a27c;
+
+    position: relative;
+    z-index: 1;
+
+    text-shadow:
+        3px 3px 3px #fff,
+        -3px 3px 3px #fff,
+        3px -3px 3px #fff,
+        -3px -3px 3px #fff;
+}
+
+@media (prefers-color-scheme: dark) {
+    .line.levelCurve > div {
+        text-shadow:
+            3px 3px 3px #000,
+            -3px 3px 3px #000,
+            3px -3px 3px #000,
+            -3px -3px 3px #000;
+    }
+}
+
+.line.freeway::after {
+    border-bottom: 3px double #efc15e;
+}
+
+.line.mainRoad::after {
+    border-bottom-color: #d06f68;
+}
+
+.line.secondaryRoad::after, .line.otherRoad::after, .line.unpavedRoad::after {
+    border-bottom-color: #db9e69;
+}
+
+.line.secondaryRoad::after {
+    border-bottom-width: 3px;
+}
+
+.line.otherRoad::after {
+    border-bottom-width: 1px;
+}
+
+.line.unpavedRoad::after {
+    border-bottom-width: 1px;
+    border-bottom-style: dashed;
+}
+
+.line.rail::after {
+    border-bottom-color: gray;
+}
+
+.verticalLineContainer {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.verticalLineContainer > * {
+    display: table-cell;
+    position: relative;
+    height: 1rem;
+}
+
+.verticalLineContainer > *::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    height: 1rem;
+    border-right: 3px solid #fff;
+}
+
+.railCrossContainer {
+    padding: 0 1.5rem;
+}
+
+.railCross::after {
+    border-right-color: gray;
+}
+
+.area.park {
+    border-color: #d1dcb9;
+    color: #99ce4d;
+    font-style: italic;
+}
+
+.area.airport {
+    border-color: #cccccc;
+    color: #999;
+    font-style: italic;
+}
+
+.area.urbanArea {
+    border-color: #d6c3dd;
+    background-color: #d6c3dd;
+}
+
+.line.countryBorder::after {
+    border-bottom-color: #333;
+}
+
+.line.stateBorder::after, .line.municipalityBorder::after {
+    border-bottom-color: #e46dae;
+    border-bottom-width: 2px;
+}
+
+.line.municipalityBorder::after {
+    border-bottom-style: dashed;
+}
+
+.text {
+    width: 100%;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.stateCapital {
+    font-size: 1.2rem;
+    text-decoration: underline;
+}
+
+.municipalityCapital {
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: underline dashed;
+}
+
+.town {
+    font-size: 0.7rem;
+    font-weight: 300;
+}
+
+.municipalityName {
+    font-weight: 300;
+    letter-spacing: 0.1rem;
+    color: #e46dae;
+}
+

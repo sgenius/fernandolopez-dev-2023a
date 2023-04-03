@@ -1,7 +1,6 @@
 import { KonvaEventObject } from 'konva/lib/Node';
 import React, { useState, useEffect, useRef } from 'react';
 import { Stage, Layer } from 'react-konva';
-import styles from './index.module.css';
 import Tileset from './Tileset';
 import { useMosaic2State } from '../context';
 import { MOSAIC_DATA } from '../constants';
@@ -10,7 +9,7 @@ const Mosaic2Canvas: React.FC = () => {
     const targetRef = useRef<HTMLDivElement>(null);
     const [curWidth, setCurWidth] = useState(0);
     const [curHeight, setCurHeight] = useState(0);
-    const { state: { currentImageSet }, dispatch } = useMosaic2State(); 
+    const { state: { currentImageSet }, dispatch } = useMosaic2State();
 
     // https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
     useEffect(() => {
@@ -24,7 +23,7 @@ const Mosaic2Canvas: React.FC = () => {
                 setCurHeight(targetRef.current.offsetHeight);
             }
         }
-        
+
         if (window) {
             window.addEventListener('resize', handleResize);
         }
@@ -91,10 +90,10 @@ const Mosaic2Canvas: React.FC = () => {
         };
         stage.position(newPos);
         updateImageSetByScale(stage.scaleX());
-    } 
+    }
 
     return (
-        <div ref={targetRef} className={styles.fullScreener}>
+        <div ref={targetRef} className="fullScreener">
             <Stage width={curWidth} height={curHeight} draggable onWheel={onStageWheel}>
                 <Layer>
                     <Tileset />

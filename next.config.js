@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 // const withTM = require('next-transpile-modules')(['konva', 'react-konva']);
+
 const nextConfig = {
   transpilePackages: ['konva', 'react-konva'],
   reactStrictMode: true,
@@ -18,6 +19,23 @@ const nextConfig = {
         pathname: '/media/images/coats_of_arms/**',
       },
     ],
+  },
+  async headers() {
+    return [
+      {
+        source: '/api/countrymap',
+        headers: [
+          {
+            key: 'x-nyankos',
+            value: 'nyan',
+          },
+          {
+            key: 'Content-Type',
+            value: 'image/png',
+          }
+        ]
+      }
+    ]
   },
   experimental: {
     esmExternals: 'loose',

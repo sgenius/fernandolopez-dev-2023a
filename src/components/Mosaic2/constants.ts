@@ -3,7 +3,7 @@ export const MOSAIC_DATA = {
         xMin: -3,
         xMax: 12,
         yMin: -17,
-        yMax: 10,
+        yMax: 12,
     },
     pieceDimensions: {
         width: 5,

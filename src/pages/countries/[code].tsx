@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import dynamic from 'next/dynamic';
 import BottomBar from '@/components/BottomBar';
 import { RC_COUNTRIES, RC_COUNTRIES_BY_CCA3 } from '@/components/Countries/data/rcCountries';
 import CountryLink from '@/components/Countries/CountryLink';
@@ -11,14 +10,6 @@ import TopBar from '@/components/TopBar';
 import { roundDec, largeNumberFormat } from '@/helpers/format';
 import styles from './countries.module.css';
 import { RcCountryData, RcCountryImage, RcCountryIdd } from './defs';
-
-const DynamicCountryMap = dynamic(() => import('@/components/Countries/CountryMap'), {
-    ssr: false,
-})
-
-const DynamicCountryMapCell = dynamic(() => import('@/components/Countries/CountryMapCell'), {
-    ssr: false,
-});
 
 export async function getStaticPaths() {
     const paths = RC_COUNTRIES.map((countryData) => ({
@@ -119,7 +110,9 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                                 {languageData.join(', ')}
                             </article>
                         </div>
-                        {/* <DynamicCountryMapCell className={`${styles.contentCellFull} ${styles.nonTextCell} ${styles.mapCell}`} code={rcCountryData.cca3} /> */}
+                        <div id="map-cell">
+                            {/* <DynamicCountryMapCell className={`${styles.contentCellFull} ${styles.nonTextCell} ${styles.mapCell}`} code={rcCountryData.cca3} /> */}
+                        </div>
                         <div id="intl-relations-cell">
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Capital(s)</span>

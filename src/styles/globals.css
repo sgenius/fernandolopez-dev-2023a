@@ -105,3 +105,8 @@ p {
 p:first-child {
   margin-top: 1rem;
 }
+
+.fullScreener {
+  width: 100vw;
+  height: 100vh;
+}
