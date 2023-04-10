@@ -4,7 +4,7 @@ import BottomBar from '@/components/BottomBar';
 import { RC_COUNTRIES, RC_COUNTRIES_BY_CCA3 } from '@/components/Countries/data/rcCountries';
 import CountryLink from '@/components/Countries/CountryLink';
 import DefaultOneCol from '@/components/DefaultOneCol';
-import { abrilFatface } from '@/components/fonts';
+import { titleFont } from '@/components/fonts';
 import Link from '@/components/Link';
 import TopBar from '@/components/TopBar';
 import { roundDec, largeNumberFormat } from '@/helpers/format';
@@ -52,11 +52,11 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                     <Link href="/countries">Back to the country index</Link>
                 </DefaultOneCol>
             </section>
-            <header className={`${styles.headerCol} ${abrilFatface.className}`}>
+            <header className={`${styles.headerCol} ${titleFont.className}`}>
                 <DefaultOneCol>
                     <div className={`${styles.contentGrid} ${styles.headerGrid}`}>
                         <h1>
-                            <span>{rcCountryData.name.common}</span>
+                            <span className="shadowedTitle">{rcCountryData.name.common}</span>
                         </h1>
                         <div id="emblems" className={styles.emblems}>
                             <Image src={rcCountryData.flags.png} width={100} height={100} alt={rcCountryData.flags.alt || `Flag of ${rcCountryData.name}`} />

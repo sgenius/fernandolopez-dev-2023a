@@ -3,7 +3,7 @@ import TopBar from '@/components/TopBar';
 import DefaultOneCol from '@/components/DefaultOneCol';
 import Link from '@/components/Link';
 import BottomBar from '@/components/BottomBar';
-import { abrilFatface } from '@/components/fonts';
+import { titleFont } from '@/components/fonts';
 import styles from './countries.module.css';
 import CountryLink from '@/components/Countries/CountryLink';
 import { RC_COUNTRIES } from '@/components/Countries/data/rcCountries';
@@ -50,10 +50,10 @@ const CountriesHome: React.FC = () => {
     return (
         <>
             <TopBar />
-            <header className={`${styles.headerCol} ${abrilFatface.className}`}>
+            <header className={`${styles.headerCol} ${titleFont.className}`}>
                 <DefaultOneCol>
-                    <h1>
-                        A Guide To The World&apos;s <span>Countries.</span>
+                    <h1 className="shadowedTitle">
+                        A Guide To The World&apos;s <span className="shadowedTitle">Countries.</span>
                     </h1>
                 </DefaultOneCol>
             </header>

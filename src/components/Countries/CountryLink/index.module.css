@@ -1,6 +1,6 @@
 .countryLink {
     display: inline-block;
-    border: 3px solid rgb(var(--theme-color-3-rgb));
+    border: 3px solid rgb(var(--theme-color-2-rgb));
     border-width: 0 0 3px;
     background: rgb(var(--background-2-rgb));
     padding: 0.2rem;

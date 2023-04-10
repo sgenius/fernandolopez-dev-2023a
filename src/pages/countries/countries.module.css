@@ -1,7 +1,7 @@
 .headerCol {
     background: rgb(var(--background-end-rgb));
     color: rgb(var(--foreground-1-rgb));
-    border-bottom: 1px solid rgb(var(--border-1-rgb));
+    padding-bottom: 1rem;
 }
 
 .headerCol h1 {

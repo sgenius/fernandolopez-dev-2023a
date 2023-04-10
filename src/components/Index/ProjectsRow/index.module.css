@@ -10,7 +10,7 @@
 }
 
 .projectCell {
-    border: 1px solid rgb(var(--border-2-rgb));
+    border: 1px solid rgb(var(--border-3-rgb));
     padding: 1rem;
     margin-bottom: 2rem;
     padding-top: 4rem;
