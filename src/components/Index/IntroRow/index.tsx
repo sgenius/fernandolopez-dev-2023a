@@ -2,10 +2,9 @@ import React from 'react';
 
 import DefaultOneCol from '@/components/DefaultOneCol';
 import styles from './index.module.css';
-import { merriweather } from '@/components/fonts';
 
 const IntroRow: React.FC = () => (
-    <div className={`${styles.oneCol} ${merriweather.className}`}>
+    <div className={`${styles.oneCol}`}>
         <DefaultOneCol>
             <div className={styles.griddedContainer}>
                 <div className={styles.gridCellLeft}>

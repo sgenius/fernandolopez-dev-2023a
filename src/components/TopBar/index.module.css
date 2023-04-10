@@ -1,0 +1,12 @@
+.topBar {
+    width: 100%;
+    height: 1rem;
+
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    letter-spacing: 0.2rem;
+
+    background-color: rgb(var(--theme-color-1-rgb));
+    color: rgb(var(--theme-color-4-rgb));
+}

@@ -1,5 +1,5 @@
 .firstCol {
-    background-color: #222;
+    background-color: rgb(var(--background-end-rgb));
 }
 
 .preTitleWrap {
@@ -9,20 +9,5 @@
 .preTitle {
     font-size: 1.6rem;
     display: inline-block;
-    color: #ccc;
-}
-
-.h1 {
-    margin: 0;
-    font-size: 3rem;
-    color: rgba(255, 255, 255, 0.7);
-    text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
-    -webkit-background-clip: text;
-    background-clip: text;    
-}
-
-@media only screen and (min-width: 48rem) {
-    .h1 {
-        font-size: 4rem;
-    }
+    color: rgb(var(--theme-color-4));
 }
