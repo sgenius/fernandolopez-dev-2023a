@@ -110,9 +110,6 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
                                 {languageData.join(', ')}
                             </article>
                         </div>
-                        <div id="map-cell">
-                            {/* <DynamicCountryMapCell className={`${styles.contentCellFull} ${styles.nonTextCell} ${styles.mapCell}`} code={rcCountryData.cca3} /> */}
-                        </div>
                         <div id="intl-relations-cell">
                             <article className={styles.cellArticle}>
                                 <span className={styles.articleName}>Capital(s)</span>

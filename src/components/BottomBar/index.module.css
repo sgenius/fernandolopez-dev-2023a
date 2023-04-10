@@ -12,6 +12,12 @@
     margin: 0;
     padding-left: 0;
     list-style: none;
+
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    gap: 1rem;
+    
 }
 
 .ul li {
@@ -21,4 +27,8 @@
 .name {
     display: inline-block;
     margin-left: 0.5rem;
+}
+
+.p {
+    text-align: center;
 }

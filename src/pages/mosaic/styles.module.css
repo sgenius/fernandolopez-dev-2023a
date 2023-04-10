@@ -18,3 +18,61 @@
 .main {
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
 }
+
+.tldr {
+    padding-bottom: 2rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid rgb(var(--border-1-rgb));
+}
+
+.explanation {
+    padding-top: 3rem;
+}
+
+.explanation ul {
+    padding-bottom: 1rem;
+    padding-left: 2rem;
+}
+
+.explanation li {
+    margin: 1rem 0;
+}
+
+.explanation h2, .explanation h3 {
+    margin: 3rem 0 2rem;
+}
+
+.explanation h2 + h3 {
+    margin-bottom: 0;
+}
+
+img.horizontal, img.horizontalLeft, img.vertical {
+    width: 100%;
+    height: auto;
+}
+
+@media only screen and (min-width: 768px) {
+    img.horizontal {
+        float: right;
+        padding: 0 0 2rem 2rem;
+        width: 50%;
+        height: auto;
+        max-width: 688px;
+    }
+    
+    img.horizontalLeft {
+        float: left;
+        padding: 0 2rem 2rem 0;
+        width: 50%;
+        height: auto;
+        max-width: 688px;
+    }
+    
+    img.vertical {
+        float: left;
+        padding: 0 2rem 2rem 0;
+        width: 50%;
+        height: auto;
+        max-width: 387px;
+    }
+}

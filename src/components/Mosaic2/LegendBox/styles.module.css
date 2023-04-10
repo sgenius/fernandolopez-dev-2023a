@@ -22,6 +22,10 @@
     cursor: pointer;
 }
 
+.legendTable {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 .legendTable td {
     padding: 0.5rem 0;
 }

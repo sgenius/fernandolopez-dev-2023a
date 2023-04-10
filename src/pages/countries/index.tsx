@@ -63,7 +63,7 @@ const CountriesHome: React.FC = () => {
                         <p>Before I loved web development, I loved geography. As a child, I used to buy 
                             these yearly World Almanacs. This intends to be pretty much like that: a reference
                             for the world&apos;s countries, with basic data to jumpstart a research session.</p>
-                        <p>This was created as an experiment to test the power of static websites - in this case, Next.js.
+                        <p>This was created as an experiment to test the power of static websites - in this case, <Link href="https://nextjs.org/">Next.js</Link>.
                             The previous version of this website used <Link href="https://github.com/nozzle/react-static">React Static</Link>,
                             which meant using different techniques than the current version.</p>
                         <p>Most data comes from <Link href="https://restcountries.eu">REST Countries</Link>; it 

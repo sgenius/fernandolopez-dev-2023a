@@ -2,13 +2,12 @@ import React from 'react';
 import { FaLinkedin, FaGithub, FaTwitter, FaBloggerB } from 'react-icons/fa';
 import DefaultOneCol from '@/components/DefaultOneCol';
 import Link from '@/components/Link';
-import { merriweather } from '@/components/fonts';
 import styles from './index.module.css';
 
 const BottomBar: React.FC = () => (
     <footer className={styles.bottomBar}>
         <DefaultOneCol>
-            <ul className={`${styles.ul} ${merriweather.className}`}>
+            <ul className={styles.ul}>
                 <li>
                     <Link href="https://www.linkedin.com/in/fernando-a-lopez-p/">
                         <FaLinkedin />
@@ -34,6 +33,7 @@ const BottomBar: React.FC = () => (
                     </Link>
                 </li>
             </ul>
+            <p className={styles.p}>&copy; 2023 Fernando Augusto L&oacute;pez Plascencia.</p>
         </DefaultOneCol>
     </footer>
 );

@@ -17,7 +17,6 @@ export default async function handler(
                 res.status(404).json({ err: `Data for ${code} is not available` });
             }
             const boundsStr = getCountryBoundsStr(code);
-            console.log({ boundsStr });
             const url = `https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/${boundsStr}/300x200?access_token=${process.env.MAPBOX_API_KEY}`;
             const response = await fetch(url);
             if (response.ok) {
