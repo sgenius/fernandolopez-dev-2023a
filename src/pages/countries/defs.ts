@@ -99,3 +99,6 @@ export interface RcCountryData {
 }
 
 export interface FullCountryData {}
+
+const Defs: React.FC = () => null;
+export default Defs;

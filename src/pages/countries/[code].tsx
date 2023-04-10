@@ -41,8 +41,6 @@ const Country: React.FC<CountryPageProps> = ({ rcCountryData }) => {
 
     const currencyData = Object.values(rcCountryData.currencies || {});
     const languageData = Object.values(rcCountryData.languages || {});
-
-    console.log(rcCountryData)
     
     return (
         <>

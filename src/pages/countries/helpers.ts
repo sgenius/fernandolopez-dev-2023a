@@ -40,3 +40,6 @@ export const getCountryBoundsStr = (code: string): string => {
     const { north, south, east, west } = countryData;
     return `[${west},${south},${east},${north}]`;
 }
+
+const Helpers: React.FC = () => null;
+export default Helpers;

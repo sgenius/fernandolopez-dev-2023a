@@ -18,7 +18,6 @@ const FullSizer: React.FC<Props> = ({ className, children }) => {
         }
         function handleResize() {
             if (targetRef.current) {
-                console.log('handleResize')
                 setCurWidth(targetRef.current.offsetWidth);
                 setCurHeight(targetRef.current.offsetHeight);
             }
