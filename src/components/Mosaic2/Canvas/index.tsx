@@ -1,15 +1,24 @@
-import { KonvaEventObject } from 'konva/lib/Node';
 import React, { useState, useEffect, useRef } from 'react';
+import Konva from 'konva';
+import { KonvaEventObject } from 'konva/lib/Node';
 import { Stage, Layer } from 'react-konva';
 import Tileset from './Tileset';
 import { useMosaic2State } from '../context';
-import { MOSAIC_DATA } from '../constants';
+import { wheelHandler, getDistance, getCenter, updateImageSetByScale } from './helpers';
+import { Vector2d } from 'konva/lib/types';
 
 const Mosaic2Canvas: React.FC = () => {
     const targetRef = useRef<HTMLDivElement>(null);
     const [curWidth, setCurWidth] = useState(0);
     const [curHeight, setCurHeight] = useState(0);
-    const { state: { currentImageSet }, dispatch } = useMosaic2State();
+    const { dispatch } = useMosaic2State();
+
+    let lastCenter: Vector2d | null = null;
+    let lastDist: number | null = null;
+
+    useEffect(() => {
+        Konva.hitOnDragEnabled = true;
+    }, []);
 
     // https://www.pluralsight.com/guides/re-render-react-component-on-window-resize
     useEffect(() => {
@@ -35,66 +44,81 @@ const Mosaic2Canvas: React.FC = () => {
         }
     }, [targetRef])
 
-    const { scaleBy, imageSets } = MOSAIC_DATA;
+    const onStageWheel = (evt: KonvaEventObject<WheelEvent>) => wheelHandler({ evt, dispatch });
 
-    // Check the current scale; set the appropiate image set for it.
-    const updateImageSetByScale = (scaleX: number) => {
-        let newImageSet = currentImageSet;
-
-        if (currentImageSet < imageSets.length - 1 && imageSets[currentImageSet + 1].minZoom < scaleX) {
-            newImageSet += 1;
-        }
-
-        if (currentImageSet > 0 && imageSets[currentImageSet].minZoom > scaleX) {
-            newImageSet -= 1;
-        }
-
-        if (newImageSet !== currentImageSet) {
-            dispatch({ type: 'setCurrentImageSet', imageSet: newImageSet });
-        }
-    }
-
-    // Zoom event handler.
-    // https://konvajs.org/docs/sandbox/Zooming_Relative_To_Pointer.html#
-    const onStageWheel = (evt: KonvaEventObject<WheelEvent>) => {
-        evt.evt.preventDefault;
-
-        const stage = evt.currentTarget.getStage();
+    // https://konvajs.org/docs/sandbox/Multi-touch_Scale_Stage.html
+    const onTouchMove = (evt: KonvaEventObject<TouchEvent>) => {
+        evt.evt.preventDefault();
+        let touch1 = evt.evt.touches[0];
+        let touch2 = evt.evt.touches[1];
+        const target = evt.target;
+        const stage = target.getStage();
         if (!stage) {
             return;
         }
 
-        const oldScale = stage.scaleX();
-        const pointer = stage.getPointerPosition();
-        if (!pointer) {
-            return;
+        if (touch1 && touch2) {
+            if (stage.isDragging()) {
+                stage.stopDrag();
+            }
+
+            const p1: Vector2d = {
+                x: touch1.clientX,
+                y: touch1.clientY,
+            };
+
+            const p2: Vector2d = {
+                x: touch2.clientX,
+                y: touch2.clientY,
+            };
+
+            if (!lastCenter) {
+                lastCenter = getCenter(p1, p2);
+                // return;
+            }
+
+            const newCenter = getCenter(p1, p2);
+
+            const dist = getDistance(p1, p2);
+
+            if (!lastDist) {
+                lastDist = dist;
+            }
+            
+            // local coordinates of center point
+            const pointTo: Vector2d = {
+                x: (newCenter.x - stage.x()) / stage.scaleX(),
+                y: (newCenter.y - stage.y()) / stage.scaleX(),
+            }
+
+            const scale = stage.scaleX() * (dist / lastDist);
+            
+            stage.scale({ x: scale, y: scale });
+
+            // calculate new position of the stage
+            const dx = newCenter.x - lastCenter.x;
+            const dy = newCenter.y - lastCenter.y;
+
+            const newPos: Vector2d = {
+                x: newCenter.x - pointTo.x * scale + dx,
+                y: newCenter.y - pointTo.y * scale + dy,
+            };
+
+            stage.position(newPos);
+            lastDist = dist;
+            lastCenter = newCenter;
+            updateImageSetByScale({ scaleX: stage.scaleX(), dispatch });
         }
+    }
 
-        const mousePointTo = {
-            x: (pointer.x - stage.x()) / oldScale,
-            y: (pointer.y - stage.y()) / oldScale,
-        };
-
-        let direction = evt.evt.deltaY > 0 ? 1 : -1;
-        if (evt.evt.ctrlKey) { // true if zooming on trackpad
-            direction = -direction;
-        }
-
-        const newScale = direction > 0 ? oldScale * scaleBy : oldScale / scaleBy;
-
-        stage.scale({ x: newScale, y: newScale });
-
-        const newPos = {
-            x: pointer.x - mousePointTo.x * newScale,
-            y: pointer.y - mousePointTo.y * newScale,
-        };
-        stage.position(newPos);
-        updateImageSetByScale(stage.scaleX());
+    const onTouchEnd = () => {
+        lastDist = 0;
+        lastCenter = null;
     }
 
     return (
         <div ref={targetRef} className="fullScreener">
-            <Stage width={curWidth} height={curHeight} draggable onWheel={onStageWheel}>
+            <Stage width={curWidth} height={curHeight} draggable onWheel={onStageWheel} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
                 <Layer>
                     <Tileset />
                 </Layer>

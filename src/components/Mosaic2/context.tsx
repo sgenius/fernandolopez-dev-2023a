@@ -8,7 +8,7 @@ const INITIAL_STATE: Mosaic2State = {
     currentImageSet: 0,
 };
 
-type Mosaic2Action = {
+export type Mosaic2Action = {
     type: 'setCurrentImageSet',
     imageSet: number,
 };
